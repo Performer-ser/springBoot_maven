@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.dao.MusicDao">
+ 	<insert id="add" parameterType="Music" useGeneratedKeys="true">
+ 		<selectKey resultType="Music" order="BEFORE" keyColumn="mscid" keyProperty="mscid">
+ 			select max(mscid)+1 mscid from music
+ 		</selectKey>
+ 		insert into music values(#{mscid},#{title},#{singer},#{special},#{mscvalue},now(),0,#{url})
+ 	</insert>	
+ 	<select id="queryMusic" resultType="Music">
+ 		select * from music
+ 	</select>
+ 	<select id="queryByid" resultType="Music">
+ 		select * from music where mscid=#{mscid}
+ 	</select>
+ 	<select id="queryFuzzy" resultType="Music">
+ 		select * from music where title like concat('%',#{title},'%') or singer like concat('%',#{singer},'%')
+ 	</select>
+ 	<select id="queryUrl" resultType="Music">
+		select * from music where mscid=#{mscid}
+	</select>
+	<update id="addclick">
+		update music set click=click+1  where mscid=#{mscid}
+	</update>
+	<update id="update">
+		update music set title=#{title} , singer=#{singer} , special=#{special} , mscvalue=#{mscvalue} where mscid=#{mscid}
+	</update>
+	<delete id="delete">
+		delete from music where mscid=#{mscid}
+	</delete>
+</mapper>

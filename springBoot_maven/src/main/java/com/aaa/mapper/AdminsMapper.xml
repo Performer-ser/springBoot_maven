@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.dao.AdminsDao">
+  <insert id="addUser" parameterType="Admins"  useGeneratedKeys="true">
+  	<selectKey resultType="Admins" order="BEFORE" keyColumn="aid" keyProperty="aid">
+		select max(aid)+1 aid from admins
+	</selectKey>
+ 	insert into admins values(#{aid},#{name},#{pwd})
+  </insert>
+  <select id="login" resultType="Admins">
+	select * from admins where name=#{name} and pwd=#{pwd}
+  </select>
+  <select id="queryByid" resultType="Admins">
+	select * from admins where aid=#{aid}
+  </select>
+  <select id="queryAdmins" resultType="Admins">
+  	select * from admins
+  </select>
+  <update id="update">
+  	update admins set name=#{name} where aid=#{aid}
+  </update>
+  <delete id="delete">
+  	delete from admins where aid=#{aid}
+  </delete>
+</mapper>

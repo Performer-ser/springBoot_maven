@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.dao.UserDao">
+  	<insert id="addUser" parameterType="User_info"  useGeneratedKeys="true">
+  		<selectKey resultType="User_info" order="BEFORE" keyColumn="uuid" keyProperty="uuid">
+ 			select max(uuid)+1 uuid from user_info
+ 		</selectKey>
+ 		insert into user_info values(#{uuid},#{uname},#{pwd})
+  	</insert>
+  	<select id="login" resultType="User_info">
+  		select * from user_info where uname=#{uname} and pwd=#{pwd}
+  	</select>
+  	<select id="queryBypage" resultType="User_info">
+  		select * from user_info limit #{param1},#{param2}
+  	</select>
+</mapper>
